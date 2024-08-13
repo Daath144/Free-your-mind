@@ -1,96 +1,96 @@
 <html>
 <head>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: black;
-            overflow: hidden;
-        }
+<style>
+body {
+margin: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+background: black;
+overflow: hidden;
+}
 
-        .matrix-background {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            color: #0f0;
-            font-family: monospace;
-            font-size: 12px;
-            line-height: 15px;
-            opacity: 0.1;
-            overflow: hidden;
-        }
+.matrix-background {
+position: absolute;
+width: 100%;
+height: 100%;
+background: #000;
+color: #0f0;
+font-family: monospace;
+font-size: 12px;
+line-height: 15px;
+opacity: 0.1;
+overflow: hidden;
+}
 
-        .matrix-animation {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-        }
+.matrix-animation {
+position: relative;
+width: 100%;
+height: 100%;
+overflow: hidden;
+background-color: #000;
+}
 
-        .matrix-column {
-            position: absolute;
-            top: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            animation: fall 5s linear infinite;
-        }
+.matrix-column {
+position: absolute;
+top: 0;
+white-space: nowrap;
+overflow: hidden;
+animation: fall 5s linear infinite;
+}
 
-        @keyframes fall {
-            0% {
-                top: -100%;
-            }
-            100% {
-                top: 100%;
-            }
-        }
+@keyframes fall {
+0% {
+top: -100%;
+}
+100% {
+top: 100%;
+}
+}
 
-        iframe {
-            position: relative;
-            z-index: 1;
-            border: 5px solid black;
-            border-radius: 10px;
-            width: 560px;
-            height: 315px;
-        }
-    </style>
+iframe {
+position: relative;
+z-index: 1;
+border: 5px solid black;
+border-radius: 10px;
+width: 560px;
+height: 315px;
+}
+</style>
 </head>
 <body>
-    <div class="matrix-background">
-        <div class="matrix-animation" id="matrix"></div>
-    </div>
-    <iframe src="https://www.youtube.com/embed/NZqy-_qIqhY" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="matrix-background">
+<div class="matrix-animation" id="matrix"></div>
+</div>
+<iframe src="https://www.youtube.com/embed/F2BOU7NDXx0?start=9&autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-    <script>
-        const matrixElement = document.getElementById('matrix');
-        const columns = Math.floor(window.innerWidth / 20);
-        const chars = 'アカサタナハマヤラワ0123456789ΔΘΞΠΣﺱﺶﻕﻡﻥψφρσ'.split('');
+<script>
+const matrixElement = document.getElementById('matrix');
+const columns = Math.floor(window.innerWidth / 20);
+const chars = 'アカサタナハマヤラワ0123456789ΔΘΞΠΣﺱﺶﻕﻡﻥψφρσ'.split('');
 
-        function createMatrixColumn() {
-            const column = document.createElement('div');
-            column.classList.add('matrix-column');
-            column.style.left = `${Math.random() * 100}%`;
-            column.style.animationDelay = `${Math.random() * -5}s`;
+function createMatrixColumn() {
+const column = document.createElement('div');
+column.classList.add('matrix-column');
+column.style.left = ${Math.random() * 100}%;
+column.style.animationDelay = ${Math.random() * -5}s;
 
-            for (let i = 0; i < 30; i++) {
-                const char = document.createElement('span');
-                char.innerText = chars[Math.floor(Math.random() * chars.length)];
-                column.appendChild(char);
-                column.appendChild(document.createElement('br'));
-            }
+for (let i = 0; i < 30; i++) {
+const char = document.createElement('span');
+char.innerText = chars[Math.floor(Math.random() * chars.length)];
+column.appendChild(char);
+column.appendChild(document.createElement('br'));
+}
 
-            matrixElement.appendChild(column);
+matrixElement.appendChild(column);
 
-            setTimeout(() => {
-                column.remove();
-            }, 5000);
-        }
+setTimeout(() => {
+column.remove();
+}, 5000);
+}
 
-        setInterval(createMatrixColumn, 500);
-    </script>
+setInterval(createMatrixColumn, 500);
+</script>
 </body>
 </html>
