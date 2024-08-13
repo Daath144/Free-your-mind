@@ -1,96 +1,81 @@
 <html>
 <head>
-<style>
-body {
-margin: 0;
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background: black;
-overflow: hidden;
-}
+    <title>They Live Video with Subtle Matrix Rain Effect</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.matrix-background {
-position: absolute;
-width: 100%;
-height: 100%;
-background: #000;
-color: #0f0;
-font-family: monospace;
-font-size: 12px;
-line-height: 15px;
-opacity: 0.1;
-overflow: hidden;
-}
+        .matrixRain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
 
-.matrix-animation {
-position: relative;
-width: 100%;
-height: 100%;
-overflow: hidden;
-background-color: #000;
-}
+        .videoWrapper {
+            z-index: 2;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            border-radius: 8px;
+        }
 
-.matrix-column {
-position: absolute;
-top: 0;
-white-space: nowrap;
-overflow: hidden;
-animation: fall 5s linear infinite;
-}
-
-@keyframes fall {
-0% {
-top: -100%;
-}
-100% {
-top: 100%;
-}
-}
-
-iframe {
-position: relative;
-z-index: 1;
-border: 5px solid black;
-border-radius: 10px;
-width: 560px;
-height: 315px;
-}
-</style>
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
-<div class="matrix-background">
-<div class="matrix-animation" id="matrix"></div>
-</div>
-<iframe src="https://www.youtube.com/watch?v=F2BOU7NDXx0&t=9s" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="matrixRain">
+        <canvas id="matrixCanvas"></canvas>
+    </div>
+    <div class="videoWrapper">
+        <iframe width="800" height="450" src="https://www.youtube.com/embed/F2BOU7NDXx0?start=357" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <script>
+        const canvas = document.getElementById("matrixCanvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-<script>
-const matrixElement = document.getElementById('matrix');
-const columns = Math.floor(window.innerWidth / 20);
-const chars = 'アカサタナハマヤラワ0123456789ΔΘΞΠΣﺱﺶﻕﻡﻥψφρσ'.split('');
+        const fontSize = 20;
+        const columns = canvas.width / fontSize;
+        let drops = [];
 
-function createMatrixColumn() {
-const column = document.createElement('div');
-column.classList.add('matrix-column');
-column.style.left = ${Math.random() * 100}%;
-column.style.animationDelay = ${Math.random() * -5}s;
+        for (let x = 0; x < columns; x++) {
+            drops[x] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
 
-for (let i = 0; i < 30; i++) {
-const char = document.createElement('span');
-char.innerText = chars[Math.floor(Math.random() * chars.length)];
-column.appendChild(char);
-column.appendChild(document.createElement('br'));
-}
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#0F0";
+            ctx.font = `${fontSize}px monospace`;
 
-matrixElement.appendChild(column);
+            for (let i = 0; i < drops.length; i += 2) { // Skipping every alternate column for less rain effect
+                const text = String.fromCharCode(0x30A0 + Math.random() * 97);
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-setTimeout(() => {
-column.remove();
-}, 5000);
-}
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
 
-setInterval(createMatrixColumn, 500);
-</script>
+        setInterval(drawMatrix, 75);
+    </script>
 </body>
 </html>
